@@ -1,16 +1,3 @@
-/* ==========================================================================
-   ANITRACK - VUE 3 APPLICATION LOGIC (app.js)
-   --------------------------------------------------------------------------
-   School Activity: Vue.js 3 Personal Anime Watchlist (Netflix-Tier UI/UX)
-   
-   GRADING RUBRIC ALIGNMENT (50/50 POINTS):
-   [10 pts] Vue.js 3 implementation - Vue.createApp(), reactive lifecycle, clean code.
-   [15 pts] Required Vue concepts - data(), {{ }}, v-for, v-if/else, v-bind, @click, methods, computed.
-   [10 pts] Working features - Real-time Search, Status Filtering, Add/Remove, Status Cycling, Favorites, Dynamic Spotlight, Custom Modal, File Upload.
-   [5 pts]  UI and organization - Netflix-style cinematic dark interface, wide canvas, custom confirmation modals.
-   [5 pts]  Originality / customization - Netflix Hero Billboard, user's collected anime collection, custom images.
-   [5 pts]  Code explanation - Clean modular structure & detailed comments.
-   ========================================================================== */
 
 // Initial 10 anime matching the user's personal collection and images in images/
 const INITIAL_ANIME_DATA = [

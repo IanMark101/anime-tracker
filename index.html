@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AniTrack - Personal Anime Watchlist</title>
-  <meta name="description" content="AniTrack is a personal anime watchlist web application built with HTML, CSS, and Vue.js 3.">
-  
-  <!-- Custom Stylesheet (Cinematic Dark Mode & Hover Transitions) -->
+  <meta name="description"
+    content="AniTrack is a personal anime watchlist web application built with HTML, CSS, and Vue.js 3.">
+
   <link rel="stylesheet" href="style.css">
 
   <!-- Vue.js 3 CDN (Global Build) -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
+
 <body>
 
   <!-- =========================================================================
@@ -54,10 +56,7 @@
            ===================================================================== -->
       <section v-if="featuredAnime" class="hero-billboard">
         <!-- Background Ambient Backdrop Blur -->
-        <div 
-          class="hero-backdrop" 
-          :style="{ backgroundImage: 'url(' + featuredAnime.image + ')' }"
-        ></div>
+        <div class="hero-backdrop" :style="{ backgroundImage: 'url(' + featuredAnime.image + ')' }"></div>
         <div class="hero-gradient-overlay"></div>
 
         <!-- Left: Featured Anime Content Area -->
@@ -66,17 +65,18 @@
             <span class="anitrack-pill">⛩️ ANITRACK SPOTLIGHT</span>
             <span class="tagline-sub">• FEATURED PICK</span>
           </div>
-          
+
           <!-- [VUE CONCEPT: {{ }} Interpolation] -->
           <h2 class="hero-title">{{ featuredAnime.title }}</h2>
 
           <!-- Meta Pill Tags -->
           <div class="hero-meta">
-            <button @click="openRatingModal(featuredAnime)" class="hero-rating-badge" title="Click to edit rating with slider" style="cursor: pointer; border: none;">
+            <button @click="openRatingModal(featuredAnime)" class="hero-rating-badge"
+              title="Click to edit rating with slider" style="cursor: pointer; border: none;">
               ★ {{ featuredAnime.rating.toFixed(1) }} / 10 ✏️
             </button>
             <span class="hero-genre-pill">{{ featuredAnime.genre }}</span>
-            
+
             <!-- [VUE CONCEPT: v-if / v-else-if / v-else] -->
             <span v-if="featuredAnime.status === 'Watching'" class="status-badge badge-watching">
               Watching
@@ -100,22 +100,15 @@
             <button @click="changeStatus(featuredAnime)" class="btn btn-primary-action">
               <span>🔄</span> Status: {{ featuredAnime.status }}
             </button>
-            
+
             <!-- [VUE CONCEPT: @click for Favorite Toggle] -->
-            <button 
-              @click="toggleFavorite(featuredAnime)" 
-              class="btn btn-glass"
-            >
+            <button @click="toggleFavorite(featuredAnime)" class="btn btn-glass">
               <span v-if="featuredAnime.isFavorite">❤️ Favorited</span>
               <span v-else>🤍 Favorite</span>
             </button>
 
             <!-- [VUE CONCEPT: @click to Switch/Cycle Spotlight] -->
-            <button 
-              @click="nextSpotlight" 
-              class="btn btn-glass"
-              title="Cycle to next anime in spotlight"
-            >
+            <button @click="nextSpotlight" class="btn btn-glass" title="Cycle to next anime in spotlight">
               <span>🎲</span> Next Spotlight
             </button>
           </div>
@@ -125,11 +118,7 @@
         <div class="hero-poster-showcase">
           <div class="hero-poster-card">
             <!-- [VUE CONCEPT: v-bind / : for dynamic src and alt] -->
-            <img 
-              :src="featuredAnime.image" 
-              :alt="featuredAnime.title" 
-              class="hero-showcase-img"
-            >
+            <img :src="featuredAnime.image" :alt="featuredAnime.title" class="hero-showcase-img">
             <div class="hero-poster-glow"></div>
             <div class="hero-poster-badge">★ {{ featuredAnime.rating.toFixed(1) }}</div>
           </div>
@@ -142,7 +131,7 @@
            ===================================================================== -->
       <section class="stats-section">
         <div class="stats-grid">
-          
+
           <!-- Stat Card 1: Total Anime -->
           <div class="stat-card">
             <div class="stat-icon">📺</div>
@@ -202,25 +191,16 @@
            ===================================================================== -->
       <section class="controls-section">
         <div class="controls-card">
-          
+
           <!-- Search Row -->
           <div class="search-row">
             <div class="search-wrapper">
               <span class="search-icon">🔍</span>
               <!-- [VUE CONCEPT: v-model Two-way Data Binding] -->
-              <input 
-                type="text" 
-                v-model="searchQuery" 
-                placeholder="Search anime by title or genre..." 
-                class="search-input"
-              >
+              <input type="text" v-model="searchQuery" placeholder="Search anime by title or genre..."
+                class="search-input">
               <!-- [VUE CONCEPT: v-if and @click] -->
-              <button 
-                v-if="searchQuery" 
-                @click="searchQuery = ''" 
-                class="search-clear-btn" 
-                title="Clear search"
-              >
+              <button v-if="searchQuery" @click="searchQuery = ''" class="search-clear-btn" title="Clear search">
                 ✕
               </button>
             </div>
@@ -242,12 +222,8 @@
             <div class="filter-pills">
               <!-- [VUE CONCEPT: v-for on status options array] -->
               <!-- [VUE CONCEPT: v-bind / :class and @click] -->
-              <button 
-                v-for="status in statusOptions" 
-                :key="status" 
-                @click="setStatusFilter(status)" 
-                :class="['filter-btn', { active: statusFilter === status }]"
-              >
+              <button v-for="status in statusOptions" :key="status" @click="setStatusFilter(status)"
+                :class="['filter-btn', { active: statusFilter === status }]">
                 {{ status }}
                 <!-- [VUE CONCEPT: Dynamic Pill Counter Badge] -->
                 <span class="filter-count" v-if="status === 'All'">{{ totalAnime }}</span>
@@ -271,7 +247,7 @@
            Demonstrating v-for, v-if/v-else-if/v-else, v-bind / :, @click
            ===================================================================== -->
       <section id="anime-grid-section" class="anime-grid-section">
-        
+
         <div class="section-header">
           <h2 class="section-title">
             <span v-if="statusFilter === 'All'">All Watchlist ({{ filteredAnime.length }})</span>
@@ -290,7 +266,8 @@
           <div class="empty-icon">📭</div>
           <h3 class="empty-title">No anime found.</h3>
           <p class="empty-desc">
-            We couldn't find any anime matching "<span style="color: var(--text-white); font-weight: 700;">{{ searchQuery || statusFilter }}</span>".
+            We couldn't find any anime matching "<span style="color: var(--text-white); font-weight: 700;">{{
+              searchQuery || statusFilter }}</span>".
           </p>
           <!-- [VUE CONCEPT: @click Event Handler] -->
           <button @click="resetFilters" class="btn btn-primary-action">
@@ -303,32 +280,19 @@
              [VUE CONCEPT: v-else with v-for rendering]
              =================================================================== -->
         <div v-else class="anime-grid">
-          
+
           <!-- [VUE CONCEPT: v-for loop over computed filteredAnime array] -->
-          <div 
-            v-for="anime in filteredAnime" 
-            :key="anime.id" 
-            class="anime-card"
-          >
+          <div v-for="anime in filteredAnime" :key="anime.id" class="anime-card">
             <!-- Anime Cover Poster (Clicking poster sets it as Spotlight Hero!) -->
             <div class="card-poster" @click="setSpotlight(anime)" title="Click to view in Spotlight Hero">
               <!-- [VUE CONCEPT: v-bind / : for dynamic src and alt] -->
-              <img 
-                :src="anime.image" 
-                :alt="anime.title" 
-                class="card-img" 
-                loading="lazy"
-              >
+              <img :src="anime.image" :alt="anime.title" class="card-img" loading="lazy">
 
               <!-- Top Badges Row -->
               <div class="card-top-badges">
                 <!-- Rating Badge (Personal Rating ★ - Click to Edit with Slider) -->
-                <button 
-                  @click.stop="openRatingModal(anime)" 
-                  class="card-rating-badge" 
-                  title="Click to edit rating score with slider"
-                  style="cursor: pointer; font-family: inherit;"
-                >
+                <button @click.stop="openRatingModal(anime)" class="card-rating-badge"
+                  title="Click to edit rating score with slider" style="cursor: pointer; font-family: inherit;">
                   <span>★</span>
                   <!-- [VUE CONCEPT: {{ }} Interpolation] -->
                   <span>{{ anime.rating.toFixed(1) }}</span>
@@ -338,11 +302,9 @@
                 <div class="card-top-actions">
                   <!-- Favorite Toggle Button -->
                   <!-- [VUE CONCEPT: @click.stop and dynamic class binding (:class)] -->
-                  <button 
-                    @click.stop="toggleFavorite(anime)" 
-                    :class="['card-fav-btn', { 'is-favorite': anime.isFavorite }]" 
-                    :title="anime.isFavorite ? 'Remove from favorites' : 'Add to favorites'"
-                  >
+                  <button @click.stop="toggleFavorite(anime)"
+                    :class="['card-fav-btn', { 'is-favorite': anime.isFavorite }]"
+                    :title="anime.isFavorite ? 'Remove from favorites' : 'Add to favorites'">
                     <!-- [VUE CONCEPT: v-if / v-else for icon display] -->
                     <span v-if="anime.isFavorite">❤️</span>
                     <span v-else>🤍</span>
@@ -350,11 +312,8 @@
 
                   <!-- Remove Anime Button (Top Right Glass Pill) -->
                   <!-- [VUE CONCEPT: @click.stop with parameter (anime.id)] -->
-                  <button 
-                    @click.stop="removeAnime(anime.id)" 
-                    class="card-delete-btn" 
-                    title="Remove this anime from collection"
-                  >
+                  <button @click.stop="removeAnime(anime.id)" class="card-delete-btn"
+                    title="Remove this anime from collection">
                     🗑️
                   </button>
                 </div>
@@ -395,20 +354,14 @@
               <div class="card-footer">
                 <!-- Change Status Button (Cycles status: Plan to Watch -> Watching -> Completed) -->
                 <!-- [VUE CONCEPT: @click.stop method call] -->
-                <button 
-                  @click.stop="changeStatus(anime)" 
-                  class="btn-cycle-status" 
-                  title="Click to cycle status: Plan to Watch → Watching → Completed"
-                >
+                <button @click.stop="changeStatus(anime)" class="btn-cycle-status"
+                  title="Click to cycle status: Plan to Watch → Watching → Completed">
                   <span>🔄</span> {{ anime.status }}
                 </button>
 
                 <!-- Spotlight Hero Button -->
-                <button 
-                  @click.stop="setSpotlight(anime)" 
-                  class="btn-spotlight" 
-                  title="Feature this anime in the Hero Spotlight"
-                >
+                <button @click.stop="setSpotlight(anime)" class="btn-spotlight"
+                  title="Feature this anime in the Hero Spotlight">
                   ✨ Spotlight
                 </button>
               </div>
@@ -425,17 +378,18 @@
            ===================================================================== -->
       <section id="add-anime-section" class="add-anime-section">
         <div class="form-card">
-          
+
           <div class="form-header">
             <div>
               <h2 class="form-title"><span>➕</span> Add New Anime to Collection</h2>
-              <p class="form-subtitle">Add a title to your personal watchlist with custom rating, watch status, and poster image.</p>
+              <p class="form-subtitle">Add a title to your personal watchlist with custom rating, watch status, and
+                poster image.</p>
             </div>
           </div>
 
           <!-- [VUE CONCEPT: @submit.prevent event directive (prevents page refresh)] -->
           <form @submit.prevent="addAnime" class="anime-form">
-            
+
             <!-- [VUE CONCEPT: v-if for validation error display] -->
             <div v-if="formError" class="form-error">
               <span>⚠️</span>
@@ -443,19 +397,13 @@
             </div>
 
             <div class="form-grid">
-              
+
               <!-- Title Input -->
               <div class="form-group">
                 <label for="anime-title" class="form-label">Anime Title *</label>
                 <!-- [VUE CONCEPT: v-model] -->
-                <input 
-                  id="anime-title" 
-                  type="text" 
-                  v-model="newAnime.title" 
-                  placeholder="e.g. Komi Can't Communicate, Bleach, Vinland Saga" 
-                  class="form-input"
-                  required
-                >
+                <input id="anime-title" type="text" v-model="newAnime.title"
+                  placeholder="e.g. Komi Can't Communicate, Bleach, Vinland Saga" class="form-input" required>
               </div>
 
               <!-- Genre Select -->
@@ -472,14 +420,7 @@
                 <label for="anime-rating" class="form-label">Personal Rating (1.0 to 10.0)</label>
                 <div class="rating-input-row">
                   <!-- [VUE CONCEPT: v-model with range input] -->
-                  <input 
-                    id="anime-rating" 
-                    type="range" 
-                    min="1" 
-                    max="10" 
-                    step="0.1" 
-                    v-model.number="newAnime.rating"
-                  >
+                  <input id="anime-rating" type="range" min="1" max="10" step="0.1" v-model.number="newAnime.rating">
                   <!-- [VUE CONCEPT: {{ }} Interpolation with live value] -->
                   <span class="rating-preview-badge">★ {{ newAnime.rating }} / 10</span>
                 </div>
@@ -498,18 +439,14 @@
 
               <!-- Cover Image File Picker & Upload -->
               <div class="form-group full-width">
-                <label for="anime-image" class="form-label">Cover Image (Type path, pick preset, or choose any JPG from your PC)</label>
-                
+                <label for="anime-image" class="form-label">Cover Image (Type path, pick preset, or choose any JPG from
+                  your PC)</label>
+
                 <div class="image-input-container">
                   <!-- [VUE CONCEPT: v-model] -->
-                  <input 
-                    id="anime-image" 
-                    type="text" 
-                    v-model="newAnime.image" 
-                    placeholder="e.g. images/komi.jpg or paste image URL" 
-                    class="form-input"
-                  >
-                  
+                  <input id="anime-image" type="text" v-model="newAnime.image"
+                    placeholder="e.g. images/komi.jpg or paste image URL" class="form-input">
+
                   <!-- File Upload Button to pick ANY JPG/PNG from your PC -->
                   <label class="btn-file-upload" title="Upload any JPG/PNG image from your computer">
                     📁 Choose JPG from PC
@@ -519,15 +456,11 @@
 
                 <!-- Quick Image File Buttons from your real collected images -->
                 <div class="quick-image-pills">
-                  <span style="font-size: 0.76rem; color: var(--text-secondary); align-self: center;">Your collected posters:</span>
+                  <span style="font-size: 0.76rem; color: var(--text-secondary); align-self: center;">Your collected
+                    posters:</span>
                   <!-- [VUE CONCEPT: v-for and @click with parameters] -->
-                  <button 
-                    type="button"
-                    v-for="preset in presetImages" 
-                    :key="preset.path" 
-                    @click="setFormImage(preset.path)" 
-                    class="quick-img-btn"
-                  >
+                  <button type="button" v-for="preset in presetImages" :key="preset.path"
+                    @click="setFormImage(preset.path)" class="quick-img-btn">
                     {{ preset.label }}
                   </button>
                 </div>
@@ -535,15 +468,12 @@
 
               <!-- Synopsis / Story Summary Input (Shown in Spotlight Hero) -->
               <div class="form-group full-width">
-                <label for="anime-synopsis" class="form-label">Story Summary / Synopsis (Shown in Spotlight Hero)</label>
+                <label for="anime-synopsis" class="form-label">Story Summary / Synopsis (Shown in Spotlight
+                  Hero)</label>
                 <!-- [VUE CONCEPT: v-model] -->
-                <textarea 
-                  id="anime-synopsis" 
-                  v-model="newAnime.synopsis" 
-                  placeholder="Write a brief story summary or premise for this anime (e.g. A legendary warrior embarks on a journey across uncharted lands...)" 
-                  class="form-input form-textarea"
-                  rows="3"
-                ></textarea>
+                <textarea id="anime-synopsis" v-model="newAnime.synopsis"
+                  placeholder="Write a brief story summary or premise for this anime (e.g. A legendary warrior embarks on a journey across uncharted lands...)"
+                  class="form-input form-textarea" rows="3"></textarea>
               </div>
 
             </div>
@@ -569,7 +499,7 @@
       <div class="container footer-content">
         <span class="footer-badge">Vue.js 3 Academic Project</span>
         <p>AniTrack &copy; 2026 • Built with HTML, CSS, and Vue.js 3 (CDN)</p>
-        
+
         <!-- Reference Systems Section -->
         <div class="reference-box">
           <span class="reference-title">Reference UI & Anime Tracking Systems:</span>
@@ -605,7 +535,8 @@
         </div>
         <h3 class="modal-title">Reset Watchlist?</h3>
         <p class="modal-description">
-          Are you sure you want to reset your watchlist back to the original 10 anime in your collection? Any custom anime you added will be cleared.
+          Are you sure you want to reset your watchlist back to the original 10 anime in your collection? Any custom
+          anime you added will be cleared.
         </p>
         <div class="modal-actions">
           <button @click="closeResetModal" class="btn btn-glass">
@@ -631,7 +562,7 @@
         <p class="modal-description">
           Adjust your personal score using the slider below (1.0 to 10.0):
         </p>
-        
+
         <!-- Live Score Preview Badge -->
         <div class="modal-rating-preview">
           <span class="modal-rating-score">★ {{ Number(ratingModal.tempRating).toFixed(1) }}</span>
@@ -640,14 +571,8 @@
 
         <!-- Slider Input -->
         <div class="modal-slider-container">
-          <input 
-            type="range" 
-            min="1.0" 
-            max="10.0" 
-            step="0.1" 
-            v-model.number="ratingModal.tempRating" 
-            class="modal-rating-slider"
-          >
+          <input type="range" min="1.0" max="10.0" step="0.1" v-model.number="ratingModal.tempRating"
+            class="modal-rating-slider">
           <div class="slider-ticks">
             <span>1.0</span>
             <span>5.0</span>
@@ -682,4 +607,5 @@
   <!-- Application Logic (Vue 3 Instance) -->
   <script src="app.js"></script>
 </body>
+
 </html>
